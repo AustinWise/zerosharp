@@ -1,3 +1,5 @@
+@setlocal
+@set DROPPATH=C:\Users\Austin\.nuget\packages\runtime.win-x64.microsoft.dotnet.ilcompiler\6.0.0-preview.6.21280.1
 @set ILCPATH=%DROPPATH%\tools
 @if not exist %ILCPATH%\ilc.exe (
   echo The DROPPATH environment variable not set. Refer to README.md.
@@ -18,5 +20,5 @@
 @if "%1" == "clean" exit /B
 
 csc /debug:embedded /noconfig /nostdlib /runtimemetadataversion:v4.0.30319 zerosharp.cs /out:zerosharp.ilexe /langversion:latest /unsafe
-%ILCPATH%\ilc zerosharp.ilexe -o zerosharp.obj --systemmodule zerosharp --map zerosharp.map -O --directpinvoke:kernel32
-link /subsystem:console zerosharp.obj /entry:__managed__Main kernel32.lib /incremental:no
+%ILCPATH%\ilc zerosharp.ilexe -o zerosharp.obj --systemmodule zerosharp --map zerosharp.map -g --directpinvoke:kernel32
+link /subsystem:console zerosharp.obj /entry:__managed__Main kernel32.lib /incremental:no /DEBUG:full
